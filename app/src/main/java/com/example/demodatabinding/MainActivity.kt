@@ -1,10 +1,12 @@
 package com.example.demodatabinding
 
 import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
+import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.example.demodatabinding.databinding.ActivityMainBinding
 
@@ -16,7 +18,9 @@ import com.example.demodatabinding.databinding.ActivityMainBinding
  * This is the starter app.
  */
 
+
 class MainActivity : AppCompatActivity() {
+    private val LOGTAG = "MainActivity"
     private lateinit var binding: ActivityMainBinding
     private val myName: MyName = MyName("Ganpat Singh")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,6 +30,13 @@ class MainActivity : AppCompatActivity() {
             addNickname(it)
         }
         binding.myName = myName
+
+        val configuration = resources.configuration
+        val currentMode = configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+        when (currentMode) {
+            Configuration.UI_MODE_NIGHT_NO -> { Log.i(LOGTAG,"Day Mode")} // Night mode is not active, we're using the light theme.
+            Configuration.UI_MODE_NIGHT_YES -> {Log.i(LOGTAG, "Night Mode")} // Night mode is active, we're using dark theme.
+        }
     }
 
     /**
